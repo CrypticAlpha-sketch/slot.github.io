@@ -5,537 +5,537 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スロットマシン</title>
     <style>
-        /* ベースのスタイル */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
-        }
+/* ベースのスタイル */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+}
 
-        body {
-            background: linear-gradient(135deg, #1a0033 0%, #330066 100%);
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
+body {
+    background: linear-gradient(135deg, #1a0033 0%, #330066 100%);
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
 
-        /* 背景エフェクト */
-        .background-fx {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.3;
-            overflow: hidden;
-        }
+/* 背景エフェクト */
+.background-fx {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+    overflow: hidden;
+}
 
-        .background-fx .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: white;
-            animation: float 8s infinite ease-in-out;
-        }
+.background-fx .particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    animation: float 8s infinite ease-in-out;
+}
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            25% {
-                opacity: 1;
-            }
-            75% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(50px);
-                opacity: 0;
-            }
-        }
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(50px);
+        opacity: 0;
+    }
+}
 
-        /* ヘッダースタイル */
-        .header {
-            width: 100%;
-            text-align: center;
-            padding: 10px;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 2;
-        }
+/* ヘッダースタイル */
+.header {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+}
 
-        .header h1 {
-            font-size: 1.8rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
-            margin-bottom: 5px;
-            animation: glow 2s infinite alternate;
-        }
+.header h1 {
+    font-size: 1.8rem;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
+    margin-bottom: 5px;
+    animation: glow 2s infinite alternate;
+}
 
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
-            }
-            to {
-                text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.7);
-            }
-        }
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    to {
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.7);
+    }
+}
 
-        /* メインのコンテンツ */
-        .container {
-            width: 90%;
-            max-width: 400px;
-            background: rgba(40, 0, 80, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(221, 160, 221, 0.5), 0 0 40px rgba(138, 43, 226, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
-        }
+/* メインのコンテンツ */
+.container {
+    width: 90%;
+    max-width: 400px;
+    background: rgba(40, 0, 80, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(221, 160, 221, 0.5), 0 0 40px rgba(138, 43, 226, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
 
-        /* タブスタイル */
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
+/* タブスタイル */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
 
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            background: rgba(50, 0, 100, 0.7);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0 5px;
-        }
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background: rgba(50, 0, 100, 0.7);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+}
 
-        .tab.active {
-            background: rgba(138, 43, 226, 0.7);
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
-        }
+.tab.active {
+    background: rgba(138, 43, 226, 0.7);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+}
 
-        /* 設定画面スタイル */
-        .settings {
-            display: none;
-        }
+/* 設定画面スタイル */
+.settings {
+    display: none;
+}
 
-        .settings.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+.settings.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
 
-        .settings h2 {
-            margin-bottom: 15px;
-            color: #FFD700;
-            text-align: center;
-        }
+.settings h2 {
+    margin-bottom: 15px;
+    color: #FFD700;
+    text-align: center;
+}
 
-        .prize-list {
-            margin-bottom: 15px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
+.prize-list {
+    margin-bottom: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
 
-        .prize-item {
-            background: rgba(60, 10, 110, 0.8);
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.prize-item {
+    background: rgba(60, 10, 110, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .prize-name {
-            flex: 2;
-            padding: 8px;
-            background: rgba(80, 20, 140, 0.5);
-            border: none;
-            border-radius: 5px;
-            color: white;
-            margin-right: 10px;
-        }
+.prize-name {
+    flex: 2;
+    padding: 8px;
+    background: rgba(80, 20, 140, 0.5);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-right: 10px;
+}
 
-        .prize-chance {
-            flex: 1;
-            padding: 8px;
-            background: rgba(80, 20, 140, 0.5);
-            border: none;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
-        }
+.prize-chance {
+    flex: 1;
+    padding: 8px;
+    background: rgba(80, 20, 140, 0.5);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+}
 
-        .remove-prize {
-            background: rgba(200, 50, 50, 0.7);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            margin-left: 10px;
-            transition: all 0.3s ease;
-        }
+.remove-prize {
+    background: rgba(200, 50, 50, 0.7);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
 
-        .remove-prize:hover {
-            background: rgba(250, 0, 0, 0.8);
-            transform: scale(1.1);
-        }
+.remove-prize:hover {
+    background: rgba(250, 0, 0, 0.8);
+    transform: scale(1.1);
+}
 
-        .total-chance {
-            text-align: center;
-            font-weight: bold;
-            margin: 15px 0;
-            color: #FFD700;
-        }
+.total-chance {
+    text-align: center;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #FFD700;
+}
 
-        .add-prize-btn, .reset-btn {
-            background: linear-gradient(135deg, #9932CC 0%, #8A2BE2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s ease;
-            width: calc(50% - 10px);
-        }
+.add-prize-btn, .reset-btn {
+    background: linear-gradient(135deg, #9932CC 0%, #8A2BE2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 5px;
+    transition: all 0.3s ease;
+    width: calc(50% - 10px);
+}
 
-        .add-prize-btn:hover, .reset-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
-        }
+.add-prize-btn:hover, .reset-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+}
 
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-        }
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
 
-        /* スロットマシンのスタイル */
-        .slot-machine {
-            display: none;
-            text-align: center;
-        }
+/* スロットマシンのスタイル */
+.slot-machine {
+    display: none;
+    text-align: center;
+}
 
-        .slot-machine.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+.slot-machine.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .slot-display {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 3px solid #FFD700;
-            box-shadow: 0 0 10px #FFD700, inset 0 0 20px rgba(255, 215, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
+.slot-display {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 3px solid #FFD700;
+    box-shadow: 0 0 10px #FFD700, inset 0 0 20px rgba(255, 215, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
 
-        .slot-display::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background: linear-gradient(to bottom, rgba(255, 215, 0, 0.3), transparent);
-            z-index: 1;
-        }
+.slot-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(255, 215, 0, 0.3), transparent);
+    z-index: 1;
+}
 
-        .slot-display::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background: linear-gradient(to top, rgba(255, 215, 0, 0.3), transparent);
-            z-index: 1;
-        }
+.slot-display::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to top, rgba(255, 215, 0, 0.3), transparent);
+    z-index: 1;
+}
 
-        .reels {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            height: 150px;
-        }
+.reels {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    height: 150px;
+}
 
-        .reel {
-            flex: 1;
-            margin: 0 5px;
-            height: 100%;
-            background: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
+.reel {
+    flex: 1;
+    margin: 0 5px;
+    height: 100%;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
 
-        .reel-container {
-            position: absolute;
-            width: 100%;
-            transition: top 0.1s linear;
-        }
+.reel-container {
+    position: absolute;
+    width: 100%;
+    transition: top 0.1s linear;
+}
 
-        .reel-item {
-            height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-            background: linear-gradient(135deg, #4B0082 0%, #9400D3 100%);
-            border-bottom: 1px solid #FFD700;
-        }
+.reel-item {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    background: linear-gradient(135deg, #4B0082 0%, #9400D3 100%);
+    border-bottom: 1px solid #FFD700;
+}
 
-        .lever-container {
-            position: relative;
-            height: 200px;
-            margin-top: 20px;
-        }
+.lever-container {
+    position: relative;
+    height: 200px;
+    margin-top: 20px;
+}
 
-        .lever {
-            width: 60px;
-            height: 180px;
-            margin: 0 auto;
-            position: relative;
-            cursor: pointer;
-            transform-origin: 50% 20%;
-            transition: transform 0.3s ease;
-        }
+.lever {
+    width: 60px;
+    height: 180px;
+    margin: 0 auto;
+    position: relative;
+    cursor: pointer;
+    transform-origin: 50% 20%;
+    transition: transform 0.3s ease;
+}
 
-        .lever-base {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 40px;
-            background: linear-gradient(135deg, #333 0%, #555 100%);
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-            z-index: 1;
-        }
+.lever-base {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 40px;
+    background: linear-gradient(135deg, #333 0%, #555 100%);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
 
-        .lever-stick {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 140px;
-            background: linear-gradient(90deg, #B22222 0%, #FF0000 50%, #B22222 100%);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(178, 34, 34, 0.7);
-            z-index: 2;
-        }
+.lever-stick {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 140px;
+    background: linear-gradient(90deg, #B22222 0%, #FF0000 50%, #B22222 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(178, 34, 34, 0.7);
+    z-index: 2;
+}
 
-        .lever-knob {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-            z-index: 3;
-        }
+.lever-knob {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    z-index: 3;
+}
 
-        /* 勝利エフェクト */
-        .win-effect {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-            display: none;
-        }
+/* 勝利エフェクト */
+.win-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    display: none;
+}
 
-        .confetti {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #FFD700;
-            animation: fall 5s ease-in-out;
-        }
-        
-        .light-beam {
-            position: absolute;
-            width: 20px;
-            height: 100vh;
-            background: linear-gradient(to bottom, transparent, rgba(255, 215, 0, 0.3), transparent);
-            transform-origin: top center;
-            animation: rotateBeam 8s infinite linear;
-        }
-        
-        @keyframes rotateBeam {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+.confetti {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #FFD700;
+    animation: fall 5s ease-in-out;
+}
 
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh) translateX(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) translateX(100px) rotate(720deg);
-                opacity: 0;
-            }
-        }
+.light-beam {
+    position: absolute;
+    width: 20px;
+    height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transform-origin: top center;
+    animation: rotateBeam 8s infinite linear;
+}
 
-        .win-text {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            font-size: 3rem;
-            font-weight: bold;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
-            z-index: 11;
-            opacity: 0;
-            animation: winPulse 2s ease-out forwards;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 20px;
-            border: 3px solid #FFD700;
-            text-align: center;
-        }
+@keyframes rotateBeam {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-        @keyframes winPulse {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0);
-            }
-            70% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.2);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-        
-        .spin-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, transparent 30%, rgba(138, 43, 226, 0.2) 70%);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 5;
-            transition: opacity 0.5s ease;
-        }
+@keyframes fall {
+    0% {
+        transform: translateY(-100vh) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) translateX(100px) rotate(720deg);
+        opacity: 0;
+    }
+}
 
-        .spin-highlights {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 4;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+.win-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+    z-index: 11;
+    opacity: 0;
+    animation: winPulse 2s ease-out forwards;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 20px;
+    border: 3px solid #FFD700;
+    text-align: center;
+}
 
-        .highlight {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: blink 0.5s infinite alternate;
-        }
+@keyframes winPulse {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    70% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
 
-        @keyframes blink {
-            from { opacity: 0.3; }
-            to { opacity: 0.7; }
-        }
+.spin-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 30%, rgba(138, 43, 226, 0.2) 70%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 0.5s ease;
+}
 
-        .prize-text {
-            font-size: 1.5rem;
-            margin-top: 10px;
-            display: block;
-        }
+.spin-highlights {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        /* レスポンシブデザイン */
-        @media (max-height: 700px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .reels {
-                height: 120px;
-            }
-            
-            .reel-item {
-                height: 120px;
-                font-size: 1.8rem;
-            }
-            
-            .lever-container {
-                height: 160px;
-            }
-            
-            .lever-stick {
-                height: 120px;
-            }
-        }
+.highlight {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: blink 0.5s infinite alternate;
+}
 
-        @media (max-height: 600px) {
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .container {
-                padding: 10px;
-            }
-            
-            .reels {
-                height: 100px;
-            }
-            
-            .reel-item {
-                height: 100px;
-                font-size: 1.5rem;
-            }
-        }
+@keyframes blink {
+    from { opacity: 0.3; }
+    to { opacity: 0.7; }
+}
+
+.prize-text {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    display: block;
+}
+
+/* レスポンシブデザイン */
+@media (max-height: 700px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .reels {
+        height: 120px;
+    }
+    
+    .reel-item {
+        height: 120px;
+        font-size: 1.8rem;
+    }
+    
+    .lever-container {
+        height: 160px;
+    }
+    
+    .lever-stick {
+        height: 120px;
+    }
+}
+
+@media (max-height: 600px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .reels {
+        height: 100px;
+    }
+    
+    .reel-item {
+        height: 100px;
+        font-size: 1.5rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -605,575 +605,621 @@
     <div class="win-effect" id="winEffect"></div>
 
     <script>
-        // 初期景品と確率
-        let prizes = [
-            { name: "特賞！", chance: 25 },
-            { name: "大当たり", chance: 25 },
-            { name: "中当たり", chance: 25 },
-            { name: "小当たり", chance: 25 }
-        ];
+// 初期景品と確率
+let prizes = [
+    { name: "特賞！", chance: 25 },
+    { name: "大当たり", chance: 25 },
+    { name: "中当たり", chance: 25 },
+    { name: "小当たり", chance: 25 }
+];
 
-        // スロットの状態
-        let slotState = {
-            spinning: false,
-            reels: [
-                { spinning: false, finalIndex: 0, items: [] },
-                { spinning: false, finalIndex: 0, items: [] },
-                { spinning: false, finalIndex: 0, items: [] }
-            ]
-        };
+// スロットの状態
+let slotState = {
+    spinning: false,
+    reels: [
+        { spinning: false, finalIndex: 0, items: [] },
+        { spinning: false, finalIndex: 0, items: [] },
+        { spinning: false, finalIndex: 0, items: [] }
+    ]
+};
 
-        // DOMが読み込まれた後に実行
-        document.addEventListener('DOMContentLoaded', function() {
-            // HTMLエレメントの取得
-            const settingsTab = document.getElementById('settingsTab');
-            const slotTab = document.getElementById('slotTab');
-            const settingsScreen = document.getElementById('settingsScreen');
-            const slotScreen = document.getElementById('slotScreen');
-            const prizeList = document.getElementById('prizeList');
-            const totalChanceElement = document.getElementById('totalChance');
-            const addPrizeBtn = document.getElementById('addPrizeBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const lever = document.getElementById('lever');
-            const reel1Container = document.getElementById('reel1');
-            const reel2Container = document.getElementById('reel2');
-            const reel3Container = document.getElementById('reel3');
-            const winEffect = document.getElementById('winEffect');
-            const backgroundFx = document.getElementById('backgroundFx');
-            const spinEffect = document.getElementById('spinEffect');
-            const spinHighlights = document.getElementById('spinHighlights');
+// DOMが読み込まれた後に実行
+document.addEventListener('DOMContentLoaded', function() {
+    // HTMLエレメントの取得
+    const settingsTab = document.getElementById('settingsTab');
+    const slotTab = document.getElementById('slotTab');
+    const settingsScreen = document.getElementById('settingsScreen');
+    const slotScreen = document.getElementById('slotScreen');
+    const prizeList = document.getElementById('prizeList');
+    const totalChanceElement = document.getElementById('totalChance');
+    const addPrizeBtn = document.getElementById('addPrizeBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const lever = document.getElementById('lever');
+    const reel1Container = document.getElementById('reel1');
+    const reel2Container = document.getElementById('reel2');
+    const reel3Container = document.getElementById('reel3');
+    const winEffect = document.getElementById('winEffect');
+    const backgroundFx = document.getElementById('backgroundFx');
+    const spinEffect = document.getElementById('spinEffect');
+    const spinHighlights = document.getElementById('spinHighlights');
+    
+    // 音声を作成する関数
+    function createDrumrollSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const duration = 0.5;
+            const gain = audioCtx.createGain();
+            gain.connect(audioCtx.destination);
             
-            // 音声を作成する関数
-            function createDrumrollSound() {
-                try {
-                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const duration = 0.5;
-                    const gain = audioCtx.createGain();
-                    gain.connect(audioCtx.destination);
-                    
-                    // よりインパクトのあるドラムロール
-                    for (let i = 0; i < 20; i++) {
-                        setTimeout(() => {
-                            const osc = audioCtx.createOscillator();
-                            osc.type = i % 2 === 0 ? 'square' : 'sine';
-                            osc.frequency.value = 150 + Math.random() * 50 + (i * 2);
-                            
-                            const oscGain = audioCtx.createGain();
-                            oscGain.gain.value = 0.1 + (i * 0.01);
-                            
-                            osc.connect(oscGain);
-                            oscGain.connect(gain);
-                            
-                            osc.start();
-                            setTimeout(() => osc.stop(), 50);
-                        }, i * 30);
-                    }
-                } catch(e) {
-                    console.error("Web Audio API is not supported in this browser");
-                }
-            }
-            
-            function createSpinSound() {
-                try {
-                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const gain = audioCtx.createGain();
-                    gain.gain.value = 0.1;
-                    gain.connect(audioCtx.destination);
-                    
-                    // メインのスピン音
+            // よりインパクトのあるドラムロール
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
                     const osc = audioCtx.createOscillator();
-                    osc.type = 'sawtooth';
-                    osc.frequency.value = 330;
-                    osc.connect(gain);
+                    osc.type = i % 2 === 0 ? 'square' : 'sine';
+                    osc.frequency.value = 150 + Math.random() * 50 + (i * 2);
                     
-                    // ランダムなクリック音を追加
-                    for (let i = 0; i < 50; i++) {
-                        setTimeout(() => {
-                            const clickOsc = audioCtx.createOscillator();
-                            clickOsc.type = 'square';
-                            clickOsc.frequency.value = 220 + Math.random() * 440;
-                            
-                            const clickGain = audioCtx.createGain();
-                            clickGain.gain.value = 0.05;
-                            clickGain.connect(audioCtx.destination);
-                            
-                            clickOsc.connect(clickGain);
-                            clickOsc.start();
-                            setTimeout(() => clickOsc.stop(), 20);
-                        }, Math.random() * 3000);
-                    }
+                    const oscGain = audioCtx.createGain();
+                    oscGain.gain.value = 0.1 + (i * 0.01);
                     
-                    // フェードアウト
-                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3);
+                    osc.connect(oscGain);
+                    oscGain.connect(gain);
                     
                     osc.start();
-                    setTimeout(() => osc.stop(), 3000);
-                } catch(e) {
-                    console.error("Web Audio API is not supported in this browser");
-                }
+                    setTimeout(() => osc.stop(), 50);
+                }, i * 30);
             }
+        } catch(e) {
+            console.error("Web Audio API is not supported in this browser");
+        }
+    }
+    
+    function createSpinSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0.1;
+            gain.connect(audioCtx.destination);
             
-            function createWinSound() {
-                try {
-                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const gain = audioCtx.createGain();
-                    gain.gain.value = 0.2;
-                    gain.connect(audioCtx.destination);
-                    
-                    // より豪華な勝利サウンド
-                    const notes = [
-                        523.25, 659.25, 783.99, // C5, E5, G5
-                        1046.50, 1318.51, 1567.98, // C6, E6, G6
-                        2093.00 // C7
-                    ];
-                    
-                    const durations = [0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3];
-                    
-                    notes.forEach((freq, i) => {
-                        setTimeout(() => {
-                            const osc = audioCtx.createOscillator();
-                            osc.type = i < 4 ? 'sine' : 'square';
-                            osc.frequency.value = freq;
-                            
-                            const noteGain = audioCtx.createGain();
-                            noteGain.gain.value = 0.15;
-                            
-                            osc.connect(noteGain);
-                            noteGain.connect(gain);
-                            
-                            osc.start();
-                            setTimeout(() => {
-                                noteGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-                                setTimeout(() => osc.stop(), 100);
-                            }, durations[i] * 1000);
-                        }, i * 100);
-                    });
-                } catch(e) {
-                    console.error("Web Audio API is not supported in this browser");
-                }
-            }
+            // メインのスピン音
+            const osc = audioCtx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.value = 330;
+            osc.connect(gain);
             
-            function createLeverSound() {
-                try {
-                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    const gain = audioCtx.createGain();
-                    gain.gain.value = 0.2;
-                    gain.connect(audioCtx.destination);
-                    
-                    // レバーの機械的なクリック音
+            // ランダムなクリック音を追加
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
                     const clickOsc = audioCtx.createOscillator();
                     clickOsc.type = 'square';
-                    clickOsc.frequency.value = 80;
+                    clickOsc.frequency.value = 220 + Math.random() * 440;
                     
                     const clickGain = audioCtx.createGain();
-                    clickGain.gain.value = 0.3;
-                    
-                    clickOsc.connect(clickGain);
+                    clickGain.gain.value = 0.05;
                     clickGain.connect(audioCtx.destination);
                     
+                    clickOsc.connect(clickGain);
                     clickOsc.start();
-                    
-                    setTimeout(() => {
-                        clickGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-                        setTimeout(() => clickOsc.stop(), 100);
-                    }, 100);
-                    
-                    // 金属音のエフェクト
-                    setTimeout(() => {
-                        const metalOsc = audioCtx.createOscillator();
-                        metalOsc.type = 'triangle';
-                        metalOsc.frequency.value = 700;
-                        
-                        const metalGain = audioCtx.createGain();
-                        metalGain.gain.value = 0.1;
-                        
-                        metalOsc.connect(metalGain);
-                        metalGain.connect(audioCtx.destination);
-                        
-                        metalOsc.start();
-                        
-                        setTimeout(() => {
-                            metalGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-                            setTimeout(() => metalOsc.stop(), 300);
-                        }, 50);
-                    }, 100);
-                } catch(e) {
-                    console.error("Web Audio API is not supported in this browser");
-                }
-            }
-
-            // 背景パーティクルの生成
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.opacity = Math.random() * 0.5;
-                particle.style.width = `${Math.random() * 8 + 2}px`;
-                particle.style.height = particle.style.width;
-                particle.style.backgroundColor = `hsl(${Math.random() * 60 + 250}, 100%, 70%)`;
-                particle.style.animationDelay = `${Math.random() * 8}s`;
-                particle.style.animationDuration = `${Math.random() * 8 + 4}s`;
-                backgroundFx.appendChild(particle);
-            }
-
-            // スピンエフェクトの光点を作成
-            function createSpinHighlights() {
-                spinHighlights.innerHTML = '';
-                
-                for (let i = 0; i < 20; i++) {
-                    const highlight = document.createElement('div');
-                    highlight.classList.add('highlight');
-                    
-                    const size = Math.random() * 10 + 5;
-                    highlight.style.width = `${size}px`;
-                    highlight.style.height = `${size}px`;
-                    
-                    highlight.style.left = `${Math.random() * 100}%`;
-                    highlight.style.top = `${Math.random() * 100}%`;
-                    
-                    highlight.style.animationDuration = `${Math.random() * 0.5 + 0.3}s`;
-                    highlight.style.animationDelay = `${Math.random() * 0.5}s`;
-                    
-                    spinHighlights.appendChild(highlight);
-                }
-            }
-
-            // タブ切り替え機能
-            settingsTab.addEventListener('click', function() {
-                settingsTab.classList.add('active');
-                slotTab.classList.remove('active');
-                settingsScreen.classList.add('active');
-                slotScreen.classList.remove('active');
-            });
-
-            slotTab.addEventListener('click', function() {
-                if (calculateTotalChance() !== 100) {
-                    alert('合計確率が100%になるように設定してください。');
-                    return;
-                }
-                slotTab.classList.add('active');
-                settingsTab.classList.remove('active');
-                slotScreen.classList.add('active');
-                settingsScreen.classList.remove('active');
-                updateSlotItems();
-            });
-
-            // 景品リストを更新
-            function updatePrizeList() {
-                prizeList.innerHTML = '';
-                prizes.forEach((prize, index) => {
-                    const prizeItem = document.createElement('div');
-                    prizeItem.classList.add('prize-item');
-                    
-                    const nameInput = document.createElement('input');
-                    nameInput.type = 'text';
-                    nameInput.classList.add('prize-name');
-                    nameInput.value = prize.name;
-                    nameInput.placeholder = '景品名';
-                    nameInput.addEventListener('input', function() {
-                        prizes[index].name = this.value;
-                    });
-                    
-                    const chanceInput = document.createElement('input');
-                    chanceInput.type = 'number';
-                    chanceInput.classList.add('prize-chance');
-                    chanceInput.value = prize.chance;
-                    chanceInput.min = 1;
-                    chanceInput.max = 100;
-                    chanceInput.addEventListener('input', function() {
-                        prizes[index].chance = parseInt(this.value) || 0;
-                        updateTotalChance();
-                    });
-                    
-                    const removeButton = document.createElement('button');
-                    removeButton.classList.add('remove-prize');
-                    removeButton.textContent = '×';
-                    removeButton.addEventListener('click', function() {
-                        prizes.splice(index, 1);
-                        updatePrizeList();
-                        updateTotalChance();
-                    });
-                    
-                    prizeItem.appendChild(nameInput);
-                    prizeItem.appendChild(chanceInput);
-                    prizeItem.appendChild(removeButton);
-                    prizeList.appendChild(prizeItem);
-                });
-                
-                updateTotalChance();
-            }
-
-            // 合計確率を計算して更新
-            function calculateTotalChance() {
-                return prizes.reduce((total, prize) => total + prize.chance, 0);
-            }
-
-            function updateTotalChance() {
-                const totalChance = calculateTotalChance();
-                totalChanceElement.textContent = `合計確率: ${totalChance}%`;
-                totalChanceElement.style.color = totalChance === 100 ? '#FFD700' : '#FF6347';
-            }
-
-            // 景品追加ボタン
-            addPrizeBtn.addEventListener('click', function() {
-                prizes.push({ name: `景品 ${prizes.length + 1}`, chance: 0 });
-                updatePrizeList();
-            });
-
-            // リセットボタン
-            resetBtn.addEventListener('click', function() {
-                if (confirm('設定をリセットしますか？')) {
-                    prizes = [
-                        { name: "特賞！", chance: 10 },
-                        { name: "大当たり", chance: 20 },
-                        { name: "中当たり", chance: 30 },
-                        { name: "小当たり", chance: 40 }
-                    ];
-                    updatePrizeList();
-                }
-            });
-
-            // スロットアイテムの更新
-            function updateSlotItems() {
-                if (prizes.length === 0) return;
-                
-                // リールのアイテムをクリア
-                for (let i = 0; i < 3; i++) {
-                    slotState.reels[i].items = [];
-                }
-                
-                // リールのHTMLを生成
-                const reelContainers = [reel1Container, reel2Container, reel3Container];
-                
-                reelContainers.forEach((container, reelIndex) => {
-                    container.innerHTML = '';
-                    
-                    // 各景品をリールに追加
-                    prizes.forEach((prize) => {
-                        for (let i = 0; i < prize.chance; i++) {
-                            slotState.reels[reelIndex].items.push(prize.name);
-                            
-                            const reelItem = document.createElement('div');
-                            reelItem.classList.add('reel-item');
-                            reelItem.textContent = prize.name;
-                            container.appendChild(reelItem);
-                        }
-                    });
-                    
-                    // アイテムをシャッフル
-                    shuffleArray(slotState.reels[reelIndex].items);
-                    
-                    // リールの初期位置を設定
-                    container.style.top = '0px';
-                });
-            }
-
-            // 配列をシャッフル
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
-
-            // レバーを引く
-            lever.addEventListener('click', function() {
-                if (slotState.spinning) return;
-                if (calculateTotalChance() !== 100) {
-                    alert('合計確率が100%になるように設定してください。');
-                    settingsTab.click();
-                    return;
-                }
-                
-                startSpin();
-            });
-
-            // スピン開始
-            function startSpin() {
-                if (slotState.spinning) return;
-                
-                slotState.spinning = true;
-                
-                // レバーアニメーション - より動的に
-                lever.style.transition = 'transform 0.3s cubic-bezier(.17,.67,.83,.67)';
-                lever.style.transform = 'rotate(45deg)';
-                createLeverSound();
-                
-                setTimeout(() => {
-                    lever.style.transition = 'transform 0.2s cubic-bezier(.17,.67,.83,.67)';
-                    lever.style.transform = 'rotate(0deg)';
-                    
-                    // スピンエフェクトを表示
-                    spinEffect.style.opacity = '1';
-                    createSpinHighlights();
-                    spinHighlights.style.opacity = '1';
-                    
-                    // スピン音
-                    createSpinSound();
-                    
-                    // 全てのリールで同じ絵柄を選ぶ
-                    const prizeIndex = Math.floor(Math.random() * prizes.length);
-                    const selectedPrize = prizes[prizeIndex];
-                    
-                    // 各リールの最終位置を決定
-                    const reelContainers = [reel1Container, reel2Container, reel3Container];
-                    
-                    // リールの絵柄をクリアして再設定する（すべてのリールで同じ順序になるように）
-                    updateSlotItemsForSpin(selectedPrize);
-                    
-                    // 各リールの高速回転アニメーション
-                    for (let i = 0; i < 3; i++) {
-                        const reelContainer = reelContainers[i];
-                        startReelAnimation(reelContainer, i, selectedPrize);
-                    }
-                    
-                    // ドラムロールのタイミングを調整
-                    setTimeout(() => {
-                        createDrumrollSound();
-                        
-                        // ドラムロール中にエフェクトを強化
-                        spinEffect.style.background = 'radial-gradient(circle at center, transparent 30%, rgba(255, 215, 0, 0.3) 70%)';
-                    }, 1500);
-                    
-                    // 勝利エフェクトのタイミング
-                    setTimeout(() => {
-                        showWinningEffect(selectedPrize);
-                        spinEffect.style.opacity = '0';
-                        spinHighlights.style.opacity = '0';
-                        slotState.spinning = false;
-                    }, 4500);
-                    
-                }, 300);
+                    setTimeout(() => clickOsc.stop(), 20);
+                }, Math.random() * 3000);
             }
             
-            // リールのアニメーション処理
-            function startReelAnimation(reelContainer, reelIndex, selectedPrize) {
-                // 初期化
-                reelContainer.style.transition = 'none';
-                reelContainer.style.top = '0px';
+            // フェードアウト
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3);
+            
+            osc.start();
+            setTimeout(() => osc.stop(), 3000);
+        } catch(e) {
+            console.error("Web Audio API is not supported in this browser");
+        }
+    }
+    
+    function createWinSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0.2;
+            gain.connect(audioCtx.destination);
+            
+            // より豪華な勝利サウンド
+            const notes = [
+                523.25, 659.25, 783.99, // C5, E5, G5
+                1046.50, 1318.51, 1567.98, // C6, E6, G6
+                2093.00 // C7
+            ];
+            
+            const durations = [0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3];
+            
+            notes.forEach((freq, i) => {
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    osc.type = i < 4 ? 'sine' : 'square';
+                    osc.frequency.value = freq;
+                    
+                    const noteGain = audioCtx.createGain();
+                    noteGain.gain.value = 0.15;
+                    
+                    osc.connect(noteGain);
+                    noteGain.connect(gain);
+                    
+                    osc.start();
+                    setTimeout(() => {
+                        noteGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                        setTimeout(() => osc.stop(), 100);
+                    }, durations[i] * 1000);
+                }, i * 100);
+            });
+        } catch(e) {
+            console.error("Web Audio API is not supported in this browser");
+        }
+    }
+    
+    function createLeverSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const gain = audioCtx.createGain();
+            gain.gain.value = 0.2;
+            gain.connect(audioCtx.destination);
+            
+            // レバーの機械的なクリック音
+            const clickOsc = audioCtx.createOscillator();
+            clickOsc.type = 'square';
+            clickOsc.frequency.value = 80;
+            
+            const clickGain = audioCtx.createGain();
+            clickGain.gain.value = 0.3;
+            
+            clickOsc.connect(clickGain);
+            clickGain.connect(audioCtx.destination);
+            
+            clickOsc.start();
+            
+            setTimeout(() => {
+                clickGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                setTimeout(() => clickOsc.stop(), 100);
+            }, 100);
+            
+            // 金属音のエフェクト
+            setTimeout(() => {
+                const metalOsc = audioCtx.createOscillator();
+                metalOsc.type = 'triangle';
+                metalOsc.frequency.value = 700;
                 
-                // 高速スピンフェーズ
-                let currentPosition = 0;
-                const itemHeight = 150;
-                const spinInterval = setInterval(() => {
-                    currentPosition -= itemHeight / 2;
-                    reelContainer.style.top = `${currentPosition % (itemHeight * 3)}px`;
+                const metalGain = audioCtx.createGain();
+                metalGain.gain.value = 0.1;
+                
+                metalOsc.connect(metalGain);
+                metalGain.connect(audioCtx.destination);
+                
+                metalOsc.start();
+                
+                setTimeout(() => {
+                    metalGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    setTimeout(() => metalOsc.stop(), 300);
                 }, 50);
+            }, 100);
+        } catch(e) {
+            console.error("Web Audio API is not supported in this browser");
+        }
+    }
+
+    // 背景パーティクルの生成
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.opacity = Math.random() * 0.5;
+        particle.style.width = `${Math.random() * 8 + 2}px`;
+        particle.style.height = particle.style.width;
+        particle.style.backgroundColor = `hsl(${Math.random() * 60 + 250}, 100%, 70%)`;
+        particle.style.animationDelay = `${Math.random() * 8}s`;
+        particle.style.animationDuration = `${Math.random() * 8 + 4}s`;
+        backgroundFx.appendChild(particle);
+    }
+
+    // スピンエフェクトの光点を作成
+    function createSpinHighlights() {
+        spinHighlights.innerHTML = '';
+        
+        for (let i = 0; i < 20; i++) {
+            const highlight = document.createElement('div');
+            highlight.classList.add('highlight');
+            
+            const size = Math.random() * 10 + 5;
+            highlight.style.width = `${size}px`;
+            highlight.style.height = `${size}px`;
+            
+            highlight.style.left = `${Math.random() * 100}%`;
+            highlight.style.top = `${Math.random() * 100}%`;
+            
+            highlight.style.animationDuration = `${Math.random() * 0.5 + 0.3}s`;
+            highlight.style.animationDelay = `${Math.random() * 0.5}s`;
+            
+            spinHighlights.appendChild(highlight);
+        }
+    }
+
+    // 確率に基づいて景品を選択する関数（新しく追加）
+    function weightedRandomSelect(items) {
+        // 合計確率を計算
+        const totalWeight = items.reduce((sum, item) => sum + item.chance, 0);
+        
+        // 0～合計確率の間でランダムな値を生成
+        const randomWeight = Math.random() * totalWeight;
+        
+        // ランダムな値に対応する景品を探す
+        let weightSum = 0;
+        for (let i = 0; i < items.length; i++) {
+            weightSum += items[i].chance;
+            if (randomWeight <= weightSum) {
+                return items[i];
+            }
+        }
+        
+        // フォールバック（合計確率が0より大きい場合には起こらない）
+        return items[items.length - 1];
+    }
+
+    // タブ切り替え機能
+    settingsTab.addEventListener('click', function() {
+        settingsTab.classList.add('active');
+        slotTab.classList.remove('active');
+        settingsScreen.classList.add('active');
+        slotScreen.classList.remove('active');
+    });
+
+    slotTab.addEventListener('click', function() {
+        if (calculateTotalChance() !== 100) {
+            alert('合計確率が100%になるように設定してください。');
+            return;
+        }
+        slotTab.classList.add('active');
+        settingsTab.classList.remove('active');
+        slotScreen.classList.add('active');
+        settingsScreen.classList.remove('active');
+        updateSlotItems();
+    });
+
+// 景品リストを更新
+    function updatePrizeList() {
+        prizeList.innerHTML = '';
+        prizes.forEach((prize, index) => {
+            const prizeItem = document.createElement('div');
+            prizeItem.classList.add('prize-item');
+            
+            const nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            nameInput.classList.add('prize-name');
+            nameInput.value = prize.name;
+            nameInput.placeholder = '景品名';
+            nameInput.addEventListener('input', function() {
+                prizes[index].name = this.value;
+            });
+            
+            const chanceInput = document.createElement('input');
+            chanceInput.type = 'number';
+            chanceInput.classList.add('prize-chance');
+            chanceInput.value = prize.chance;
+            chanceInput.min = 1;
+            chanceInput.max = 100;
+            chanceInput.addEventListener('input', function() {
+                prizes[index].chance = parseInt(this.value) || 0;
+                updateTotalChance();
+            });
+            
+            const removeButton = document.createElement('button');
+            removeButton.classList.add('remove-prize');
+            removeButton.textContent = '×';
+            removeButton.addEventListener('click', function() {
+                prizes.splice(index, 1);
+                updatePrizeList();
+                updateTotalChance();
+            });
+            
+            prizeItem.appendChild(nameInput);
+            prizeItem.appendChild(chanceInput);
+            prizeItem.appendChild(removeButton);
+            prizeList.appendChild(prizeItem);
+        });
+        
+        updateTotalChance();
+    }
+
+    // 合計確率を計算して更新
+    function calculateTotalChance() {
+        return prizes.reduce((sum, prize) => sum + prize.chance, 0);
+    }
+
+    function updateTotalChance() {
+        const totalChance = calculateTotalChance();
+        totalChanceElement.textContent = `合計確率: ${totalChance}%`;
+        totalChanceElement.style.color = totalChance === 100 ? '#FFD700' : '#FF6347';
+    }
+
+    // 景品追加ボタン
+    addPrizeBtn.addEventListener('click', function() {
+        prizes.push({ name: `景品 ${prizes.length + 1}`, chance: 0 });
+        updatePrizeList();
+    });
+
+    // リセットボタン
+    resetBtn.addEventListener('click', function() {
+        if (confirm('設定をリセットしますか？')) {
+            prizes = [
+                { name: "特賞！", chance: 10 },
+                { name: "大当たり", chance: 20 },
+                { name: "中当たり", chance: 30 },
+                { name: "小当たり", chance: 40 }
+            ];
+            updatePrizeList();
+        }
+    });
+
+    // スロットアイテムの更新
+    function updateSlotItems() {
+        if (prizes.length === 0) return;
+        
+        // リールのアイテムをクリア
+        for (let i = 0; i < 3; i++) {
+            slotState.reels[i].items = [];
+        }
+        
+        // リールのHTMLを生成
+        const reelContainers = [reel1Container, reel2Container, reel3Container];
+        
+        reelContainers.forEach((container, reelIndex) => {
+            container.innerHTML = '';
+            
+            // 各景品をリールに追加
+            prizes.forEach((prize) => {
+                // 0の確率の景品はスキップ
+                if (prize.chance <= 0) return;
                 
-                // スピン終了とスムーズな停止
-                setTimeout(() => {
-                    clearInterval(spinInterval);
+                // 確率に応じたアイテム数を追加
+                for (let i = 0; i < prize.chance; i++) {
+                    slotState.reels[reelIndex].items.push(prize.name);
                     
-                    // 最終位置に滑らかに移動
-                    reelContainer.style.transition = `top ${1.5 + reelIndex * 0.5}s cubic-bezier(0.2, 0.7, 0.3, 1)`;
-                    reelContainer.style.top = `-${itemHeight}px`; // 中央の項目を表示
-                }, 2000 + reelIndex * 500);
+                    const reelItem = document.createElement('div');
+                    reelItem.classList.add('reel-item');
+                    reelItem.textContent = prize.name;
+                    container.appendChild(reelItem);
+                }
+            });
+            
+            // アイテムをシャッフル
+            shuffleArray(slotState.reels[reelIndex].items);
+            
+            // リールの初期位置を設定
+            container.style.top = '0px';
+        });
+    }
+
+    // 配列をシャッフル
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // レバーを引く
+    lever.addEventListener('click', function() {
+        if (slotState.spinning) return;
+        if (calculateTotalChance() !== 100) {
+            alert('合計確率が100%になるように設定してください。');
+            settingsTab.click();
+            return;
+        }
+        
+        startSpin();
+    });
+
+    // スピン開始 - 確率に基づいた景品選択に修正
+    function startSpin() {
+        if (slotState.spinning) return;
+        
+        slotState.spinning = true;
+        
+        // レバーアニメーション
+        lever.style.transition = 'transform 0.3s cubic-bezier(.17,.67,.83,.67)';
+        lever.style.transform = 'rotate(45deg)';
+        createLeverSound();
+        
+        setTimeout(() => {
+            lever.style.transition = 'transform 0.2s cubic-bezier(.17,.67,.83,.67)';
+            lever.style.transform = 'rotate(0deg)';
+            
+            // スピンエフェクトを表示
+            spinEffect.style.opacity = '1';
+            createSpinHighlights();
+            spinHighlights.style.opacity = '1';
+            
+            // スピン音
+            createSpinSound();
+            
+            // 確率に基づいて景品を選択（修正部分）
+            const selectedPrize = weightedRandomSelect(prizes);
+            
+            // 各リールの最終位置を決定
+            const reelContainers = [reel1Container, reel2Container, reel3Container];
+            
+            // リールの絵柄をクリアして再設定する（すべてのリールで同じ順序になるように）
+            updateSlotItemsForSpin(selectedPrize);
+            
+            // 各リールの高速回転アニメーション
+            for (let i = 0; i < 3; i++) {
+                const reelContainer = reelContainers[i];
+                startReelAnimation(reelContainer, i, selectedPrize);
             }
             
-            // スロットの絵柄を再設定する（すべてのリールで同じ順序にする）
-            function updateSlotItemsForSpin(winningPrize) {
-                // リールのHTMLを生成
-                const reelContainers = [reel1Container, reel2Container, reel3Container];
+            // ドラムロールのタイミングを調整
+            setTimeout(() => {
+                createDrumrollSound();
                 
-                reelContainers.forEach((container, reelIndex) => {
-                    container.innerHTML = '';
-                    slotState.reels[reelIndex].items = [];
+                // ドラムロール中にエフェクトを強化
+                spinEffect.style.background = 'radial-gradient(circle at center, transparent 30%, rgba(255, 215, 0, 0.3) 70%)';
+            }, 1500);
+            
+            // 勝利エフェクトのタイミング
+            setTimeout(() => {
+                showWinningEffect(selectedPrize);
+                spinEffect.style.opacity = '0';
+                spinHighlights.style.opacity = '0';
+                slotState.spinning = false;
+            }, 4500);
+            
+        }, 300);
+    }
+
+    // リールのアニメーション処理
+    function startReelAnimation(reelContainer, reelIndex, selectedPrize) {
+        // 初期化
+        reelContainer.style.transition = 'none';
+        reelContainer.style.top = '0px';
+        
+        // 高速スピンフェーズ
+        let currentPosition = 0;
+        const itemHeight = 150;
+        const spinInterval = setInterval(() => {
+            currentPosition -= itemHeight / 2;
+            reelContainer.style.top = `${currentPosition % (itemHeight * 3)}px`;
+        }, 50);
+        
+        // スピン終了とスムーズな停止
+        setTimeout(() => {
+            clearInterval(spinInterval);
+            
+            // 最終位置に滑らかに移動
+            reelContainer.style.transition = `top ${1.5 + reelIndex * 0.5}s cubic-bezier(0.2, 0.7, 0.3, 1)`;
+            reelContainer.style.top = `-${itemHeight}px`; // 中央の項目を表示
+        }, 2000 + reelIndex * 500);
+    }
+    
+    // スロットの絵柄を再設定する（すべてのリールで同じ順序にする）
+    function updateSlotItemsForSpin(winningPrize) {
+        // リールのHTMLを生成
+        const reelContainers = [reel1Container, reel2Container, reel3Container];
+        
+        reelContainers.forEach((container, reelIndex) => {
+            container.innerHTML = '';
+            slotState.reels[reelIndex].items = [];
+            
+            // 有効な景品のみのリストを作成
+            const validPrizes = prizes.filter(prize => prize.chance > 0);
+            
+            // 当選する景品を中央に表示するための配置を作成
+            // 有効な景品が1つしかない場合の対応
+            if (validPrizes.length === 1) {
+                const reelItems = Array(3).fill(winningPrize.name);
+                
+                // リールのアイテムを生成
+                reelItems.forEach((prizeName) => {
+                    slotState.reels[reelIndex].items.push(prizeName);
                     
-                    // 各リールに全く同じ順序で景品を配置する
-                    // 中央に選ばれた景品が来るようにする
-                    const prizesList = [...prizes]; // 景品リストのコピー
+                    const reelItem = document.createElement('div');
+                    reelItem.classList.add('reel-item');
+                    reelItem.textContent = prizeName;
+                    container.appendChild(reelItem);
+                });
+            } else {
+                // 当選景品のインデックスを取得
+                const winningIndex = validPrizes.findIndex(p => p.name === winningPrize.name);
+                
+                // 上の景品（前の景品または最後の景品）
+                const topIndex = (winningIndex - 1 + validPrizes.length) % validPrizes.length;
+                // 下の景品（次の景品または最初の景品）
+                const bottomIndex = (winningIndex + 1) % validPrizes.length;
+                
+                const reelItems = [
+                    validPrizes[topIndex].name,
+                    winningPrize.name,
+                    validPrizes[bottomIndex].name
+                ];
+                
+                // リールのアイテムを生成
+                reelItems.forEach((prizeName) => {
+                    slotState.reels[reelIndex].items.push(prizeName);
                     
-                    // 当選する景品を中央に表示するための配置を作成
-                    const reelItems = [
-                        prizesList[(prizesList.findIndex(p => p.name === winningPrize.name) + 1) % prizesList.length].name,
-                        winningPrize.name,
-                        prizesList[(prizesList.findIndex(p => p.name === winningPrize.name) + 2) % prizesList.length].name
-                    ];
-                    
-                    // リールのアイテムを生成
-                    reelItems.forEach((prizeName) => {
-                        slotState.reels[reelIndex].items.push(prizeName);
-                        
-                        const reelItem = document.createElement('div');
-                        reelItem.classList.add('reel-item');
-                        reelItem.textContent = prizeName;
-                        container.appendChild(reelItem);
-                    });
-                    
-                    // リールの初期位置を設定
-                    container.style.top = '0px';
+                    const reelItem = document.createElement('div');
+                    reelItem.classList.add('reel-item');
+                    reelItem.textContent = prizeName;
+                    container.appendChild(reelItem);
                 });
             }
-
-            // 勝利エフェクトの表示
-            function showWinningEffect(prize) {
-                createWinSound();
-                
-                // 紙吹雪エフェクト
-                winEffect.style.display = 'block';
-                winEffect.innerHTML = '';
-                
-                // 光線エフェクト
-                for (let i = 0; i < 8; i++) {
-                    const beam = document.createElement('div');
-                    beam.classList.add('light-beam');
-                    beam.style.left = '50%';
-                    beam.style.transformOrigin = 'top';
-                    beam.style.transform = `translateX(-50%) rotate(${i * 45}deg)`;
-                    beam.style.animationDelay = `${i * 0.1}s`;
-                    winEffect.appendChild(beam);
-                }
-                
-                // 紙吹雪を生成 - より多く、バリエーション豊かに
-                for (let i = 0; i < 150; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.classList.add('confetti');
-                    confetti.style.left = `${Math.random() * 100}%`;
-                    confetti.style.top = `-50px`;
-                    
-                    // 多色の紙吹雪
-                    const hue = Math.random() * 360;
-                    confetti.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
-                    
-                    // サイズとシェイプのバリエーション
-                    const size = Math.random() * 15 + 5;
-                    confetti.style.width = `${size}px`;
-                    confetti.style.height = `${size}px`;
-                    
-                    // 形の変化
-                    if (Math.random() > 0.7) {
-                        confetti.style.borderRadius = '50%';
-                    } else if (Math.random() > 0.5) {
-                        confetti.style.borderRadius = '0';
-                    } else {
-                        confetti.style.borderRadius = '50% 0 50% 0';
-                    }
-                    
-                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                    confetti.style.animationDelay = `${Math.random() * 2}s`;
-                    confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                    winEffect.appendChild(confetti);
-                }
-                
-                // 勝利テキスト - よりアニメーションを追加
-                const winText = document.createElement('div');
-                winText.classList.add('win-text');
-                winText.innerHTML = `当選！<span class="prize-text">${prize.name}</span>`;
-                winEffect.appendChild(winText);
-                
-                // エフェクトを一定時間後に消す
-                setTimeout(() => {
-                    winEffect.style.display = 'none';
-                }, 5000);
-            }
-
-            // 初期化
-            updatePrizeList();
-            createSpinHighlights();
+            
+            // リールの初期位置を設定
+            container.style.top = '0px';
         });
+    }
+
+    // 勝利エフェクトの表示
+    function showWinningEffect(prize) {
+        createWinSound();
+        
+        // 紙吹雪エフェクト
+        winEffect.style.display = 'block';
+        winEffect.innerHTML = '';
+        
+        // 光線エフェクト
+        for (let i = 0; i < 8; i++) {
+            const beam = document.createElement('div');
+            beam.classList.add('light-beam');
+            beam.style.left = '50%';
+            beam.style.transformOrigin = 'top';
+            beam.style.transform = `translateX(-50%) rotate(${i * 45}deg)`;
+            beam.style.animationDelay = `${i * 0.1}s`;
+            winEffect.appendChild(beam);
+        }
+        
+        // 紙吹雪を生成 - より多く、バリエーション豊かに
+        for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.top = `-50px`;
+            
+            // 多色の紙吹雪
+            const hue = Math.random() * 360;
+            confetti.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+            
+            // サイズとシェイプのバリエーション
+            const size = Math.random() * 15 + 5;
+            confetti.style.width = `${size}px`;
+            confetti.style.height = `${size}px`;
+            
+            // 形の変化
+            if (Math.random() > 0.7) {
+                confetti.style.borderRadius = '50%';
+            } else if (Math.random() > 0.5) {
+                confetti.style.borderRadius = '0';
+            } else {
+                confetti.style.borderRadius = '50% 0 50% 0';
+            }
+            
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            confetti.style.animationDelay = `${Math.random() * 2}s`;
+            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            winEffect.appendChild(confetti);
+        }
+        
+        // 勝利テキスト - よりアニメーションを追加
+        const winText = document.createElement('div');
+        winText.classList.add('win-text');
+        winText.innerHTML = `<span class="prize-text">${prize.name}が当たりました！</span>`;
+        winEffect.appendChild(winText);
+        
+        // エフェクトを一定時間後に消す
+        setTimeout(() => {
+            winEffect.style.display = 'none';
+        }, 5000);
+    }
+
+    // 初期化
+    updatePrizeList();
+    createSpinHighlights();
+});
     </script>
 </body>
 </html>
