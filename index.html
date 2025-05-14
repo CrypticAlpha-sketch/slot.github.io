@@ -229,6 +229,41 @@ body {
     justify-content: space-between;
 }
 
+/* 景品凡例スタイル */
+.prize-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    background: rgba(60, 10, 110, 0.8);
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin: 2px;
+    font-size: 0.85rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.legend-text {
+    white-space: nowrap;
+}
+
 /* スロットマシンのスタイル */
 .slot-machine {
     display: none;
@@ -570,6 +605,11 @@ body {
 
         <!-- スロットマシン画面 -->
         <div class="slot-machine active" id="slotScreen">
+            <!-- 景品凡例 -->
+            <div class="prize-legend" id="prizeLegend">
+                <!-- 景品凡例がJavaScriptで挿入されます -->
+            </div>
+            
             <div class="slot-display">
                 <div class="spin-highlights" id="spinHighlights"></div>
                 <div class="spin-effect" id="spinEffect"></div>
@@ -607,10 +647,10 @@ body {
     <script>
 // 初期景品と確率
 let prizes = [
-    { name: "特賞！", chance: 25 },
-    { name: "大当たり", chance: 25 },
-    { name: "中当たり", chance: 25 },
-    { name: "小当たり", chance: 25 }
+    { name: "アイコン1", chance: 10 },
+    { name: "アイコン2", chance: 20 },
+    { name: "アイコン3", chance: 30 },
+    { name: "アイコン4", chance: 40 }
 ];
 
 // スロットの状態
@@ -631,6 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsScreen = document.getElementById('settingsScreen');
     const slotScreen = document.getElementById('slotScreen');
     const prizeList = document.getElementById('prizeList');
+    const prizeLegend = document.getElementById('prizeLegend');
     const totalChanceElement = document.getElementById('totalChance');
     const addPrizeBtn = document.getElementById('addPrizeBtn');
     const resetBtn = document.getElementById('resetBtn');
@@ -642,6 +683,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const backgroundFx = document.getElementById('backgroundFx');
     const spinEffect = document.getElementById('spinEffect');
     const spinHighlights = document.getElementById('spinHighlights');
+    
+    // 色の配列 - 景品ごとに異なる色を割り当てる
+    const colors = [
+        '#FF6347', // トマト
+        '#4682B4', // スティールブルー
+        '#9ACD32', // イエローグリーン
+        '#FF8C00', // ダークオレンジ
+        '#8A2BE2', // ブルーバイオレット
+        '#2E8B57', // シーグリーン
+        '#FF69B4', // ホットピンク
+        '#1E90FF', // ドジャーブルー
+        '#FFD700', // ゴールド
+        '#32CD32'  // ライムグリーン
+    ];
     
     // 音声を作成する関数
     function createDrumrollSound() {
@@ -840,7 +895,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 確率に基づいて景品を選択する関数（新しく追加）
+    // 確率に基づいて景品を選択する関数
     function weightedRandomSelect(items) {
         // 合計確率を計算
         const totalWeight = items.reduce((sum, item) => sum + item.chance, 0);
@@ -861,6 +916,32 @@ document.addEventListener('DOMContentLoaded', function() {
         return items[items.length - 1];
     }
 
+    // 景品凡例を更新する関数
+    function updatePrizeLegend() {
+        prizeLegend.innerHTML = '';
+        
+        // 確率0でない景品だけを表示
+        const validPrizes = prizes.filter(prize => prize.chance > 0);
+        
+        validPrizes.forEach((prize, index) => {
+            const legendItem = document.createElement('div');
+            legendItem.classList.add('legend-item');
+            
+            const colorIndex = index % colors.length;
+            const legendColor = document.createElement('span');
+            legendColor.classList.add('legend-color');
+            legendColor.style.backgroundColor = colors[colorIndex];
+            
+            const legendText = document.createElement('span');
+            legendText.classList.add('legend-text');
+            legendText.textContent = `${prize.name}: ${prize.chance}%`;
+            
+            legendItem.appendChild(legendColor);
+            legendItem.appendChild(legendText);
+            prizeLegend.appendChild(legendItem);
+        });
+    }
+
     // タブ切り替え機能
     settingsTab.addEventListener('click', function() {
         settingsTab.classList.add('active');
@@ -879,9 +960,10 @@ document.addEventListener('DOMContentLoaded', function() {
         slotScreen.classList.add('active');
         settingsScreen.classList.remove('active');
         updateSlotItems();
+        updatePrizeLegend();  // 景品凡例を更新
     });
 
-// 景品リストを更新
+    // 景品リストを更新
     function updatePrizeList() {
         prizeList.innerHTML = '';
         prizes.forEach((prize, index) => {
@@ -947,10 +1029,10 @@ document.addEventListener('DOMContentLoaded', function() {
     resetBtn.addEventListener('click', function() {
         if (confirm('設定をリセットしますか？')) {
             prizes = [
-                { name: "特賞！", chance: 10 },
-                { name: "大当たり", chance: 20 },
-                { name: "中当たり", chance: 30 },
-                { name: "小当たり", chance: 40 }
+                { name: "アイコン1", chance: 10 },
+                { name: "アイコン2", chance: 20 },
+                { name: "アイコン3", chance: 30 },
+                { name: "アイコン4", chance: 40 }
             ];
             updatePrizeList();
         }
@@ -972,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = '';
             
             // 各景品をリールに追加
-            prizes.forEach((prize) => {
+            prizes.forEach((prize, prizeIndex) => {
                 // 0の確率の景品はスキップ
                 if (prize.chance <= 0) return;
                 
@@ -983,6 +1065,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const reelItem = document.createElement('div');
                     reelItem.classList.add('reel-item');
                     reelItem.textContent = prize.name;
+                    
+                    // 景品ごとに色を割り当て
+                    const colorIndex = prizeIndex % colors.length;
+                    reelItem.style.background = `linear-gradient(135deg, ${colors[colorIndex]} 0%, #9400D3 100%)`;
+                    
                     container.appendChild(reelItem);
                 }
             });
@@ -1039,7 +1126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // スピン音
             createSpinSound();
             
-            // 確率に基づいて景品を選択（修正部分）
+            // 確率に基づいて景品を選択
             const selectedPrize = weightedRandomSelect(prizes);
             
             // 各リールの最終位置を決定
@@ -1115,12 +1202,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 const reelItems = Array(3).fill(winningPrize.name);
                 
                 // リールのアイテムを生成
-                reelItems.forEach((prizeName) => {
+                reelItems.forEach((prizeName, i) => {
                     slotState.reels[reelIndex].items.push(prizeName);
                     
                     const reelItem = document.createElement('div');
                     reelItem.classList.add('reel-item');
                     reelItem.textContent = prizeName;
+                    
+                    // 当選景品のインデックスを取得して色を設定
+                    const prizeIndex = prizes.findIndex(p => p.name === prizeName);
+                    const colorIndex = prizeIndex % colors.length;
+                    reelItem.style.background = `linear-gradient(135deg, ${colors[colorIndex]} 0%, #9400D3 100%)`;
+                    
                     container.appendChild(reelItem);
                 });
             } else {
@@ -1145,6 +1238,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const reelItem = document.createElement('div');
                     reelItem.classList.add('reel-item');
                     reelItem.textContent = prizeName;
+                    
+                    // 該当する景品のインデックスを取得して色を設定
+                    const prizeIndex = prizes.findIndex(p => p.name === prizeName);
+                    const colorIndex = prizeIndex % colors.length;
+                    reelItem.style.background = `linear-gradient(135deg, ${colors[colorIndex]} 0%, #9400D3 100%)`;
+                    
                     container.appendChild(reelItem);
                 });
             }
@@ -1219,6 +1318,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初期化
     updatePrizeList();
     createSpinHighlights();
+    updatePrizeLegend();  // 景品凡例を初期化
 });
     </script>
 </body>
